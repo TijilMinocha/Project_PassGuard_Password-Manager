@@ -1,4 +1,4 @@
-# Project - <PassGuard/> Your own Password Manager
+# Project - PassGuard : Your own Password Manager
 
 ## Overview
 - A **Password Manager Web APP** built with **ReactJS**, **Vite**, and **Tailwind CSS**.
