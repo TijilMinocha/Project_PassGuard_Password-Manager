@@ -6,15 +6,17 @@ import { v4 as uuidv4 } from 'uuid';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Manager = () => {
-    const ref = useRef()
-    const passwordRef = useRef()
+    const ref = useRef() // to manipulate image in DOM
+    const passwordRef = useRef() // to manipulate input type
     const [form, setform] = useState({ site: "", username: "", password: "" })
     const [passwordArray, setPasswordArray] = useState([])
 
+
+    // to retrieve previously saved passwords once the app gets loaded
     useEffect(() => {
         let passwords = localStorage.getItem("passwords");
         if (passwords) {
-            setPasswordArray(JSON.parse(passwords))
+            setPasswordArray(JSON.parse(passwords)) //parse becuase local storage only stores strings
         }
     }, [])
 
@@ -29,13 +31,13 @@ const Manager = () => {
             progress: undefined,
             theme: "dark",
         });
-        navigator.clipboard.writeText(text)
+        navigator.clipboard.writeText(text) // uses web clipboard api to write string to clipboard
     }
 
 
 
     const showPassword = () => {
-        passwordRef.current.type = "text"
+        passwordRef.current.type = "text" // toggles the input type
         console.log(ref.current.src)
         if (ref.current.src.includes("icons/eyecross.png")) {
             ref.current.src = "icons/eye.png"
@@ -51,10 +53,10 @@ const Manager = () => {
     const savePassword = () => {
         if (form.site.length > 3 && form.username.length > 3 && form.password.length > 3) {
 
-            setPasswordArray([...passwordArray, { ...form, id: uuidv4() }])
-            localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }]))
+            setPasswordArray([...passwordArray, { ...form, id: uuidv4() }]) // appending the passwords array with new credentials
+            localStorage.setItem("passwords", JSON.stringify([...passwordArray, { ...form, id: uuidv4() }])) //using spead operators - we don't have to pass each element -  can directly pass the array
             console.log([...passwordArray, form])
-            setform({ site: "", username: "", password: "" })
+            setform({ site: "", username: "", password: "" }) // once details entered - reset the form
             toast('Password Saved Sucessfully!', {
                 position: "top-right",
                 autoClose: 2000,
@@ -109,10 +111,10 @@ const Manager = () => {
     }
 
 
-
+    //generic event handler
     const handleChange = (e) => {
         setform({ ...form, [e.target.name]: e.target.value })
-    }
+    } // basically we copy & mutate -  not inplace change
 
 
 
